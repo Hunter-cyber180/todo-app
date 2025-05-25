@@ -8,6 +8,9 @@ dotenv.config();
 
 app.use(cors());
 
+app.use(express.json({ type: "application/json" }));
+app.use(express.urlencoded({ extended: false }));
+
 mongoose
   .connect(`mongodb://127.0.0.1:27017/${process.env.MONGO_DB_URI}`, {
     autoIndex: true,
