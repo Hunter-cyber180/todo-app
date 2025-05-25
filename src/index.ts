@@ -1,0 +1,25 @@
+import express, { Request, Response, NextFunction } from "express";
+import mongoose from "mongoose";
+import dotenv from "dotenv";
+import cors from "cors";
+const app = express();
+dotenv.config();
+
+app.use(cors());
+
+mongoose
+  .connect(`mongodb://127.0.0.1:27017/${process.env.MONGO_DB_URI}`, {
+    autoIndex: true,
+  })
+  .then(() => console.log("database connected..."))
+  .catch((error) => console.log("error connecting database: ", error));
+
+app.get("/", (req: Request, res: Response) => {
+  res.json({ message: "welcome to main page!" });
+});
+
+const port: number = parseInt(process.env.PORT!) || 3000;
+
+app.listen(port, "127.0.0.1", () =>
+  console.log(`server running on localhost:${port}...`)
+);
