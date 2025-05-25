@@ -1,5 +1,6 @@
 import express, { Request, Response, NextFunction } from "express";
 import mongoose from "mongoose";
+import todoController from "./todos/todoController";
 import dotenv from "dotenv";
 import cors from "cors";
 const app = express();
@@ -17,6 +18,8 @@ mongoose
 app.get("/", (req: Request, res: Response) => {
   res.json({ message: "welcome to main page!" });
 });
+
+app.use("/todos", todoController);
 
 const port: number = parseInt(process.env.PORT!) || 3000;
 

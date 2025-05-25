@@ -65,3 +65,5 @@ router.delete("/:id", async (req: Request, res: Response): Promise<void> => {
     success: true,
   });
 });
+
+export default router;
