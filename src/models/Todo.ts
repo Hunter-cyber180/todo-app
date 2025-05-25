@@ -6,8 +6,8 @@ const todoSchema = new Schema(
     title: { type: String, required: true },
     status: {
       type: String,
-      enum: ["COMPLETED", "PENDING"],
-      default: "PENDING",
+      enum: ["completed", "pending"],
+      default: "pending",
     },
   },
   { timestamps: true }
