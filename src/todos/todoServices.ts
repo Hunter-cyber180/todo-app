@@ -1,6 +1,7 @@
 import GetAllTodosDto from "./dto/getAllTodos";
 import TodoModel from "../models/Todo";
 import Todo from "./dto/todoDto";
+import TodoError from "../errors/TodoError";
 
 export const getAll = async (filters: GetAllTodosDto) => {
   const { limit, page } = filters;
@@ -13,7 +14,7 @@ export const getAll = async (filters: GetAllTodosDto) => {
 
 export const getOne = async (id: string) => {
   const todo = await TodoModel.findById(id);
-  if (!todo) throw new Error("todo not found!");
+  if (!todo) throw new TodoError("todo not found!", 404);
 
   return todo;
 };
@@ -31,14 +32,14 @@ export const update = async (id: string, params: Todo) => {
     runValidators: true,
   });
 
-  if (!updatedTodo) throw new Error("todo not found!");
+  if (!updatedTodo) throw new TodoError("todo not found!", 404);
 
   return updatedTodo;
 };
 
 export const remove = async (id: string) => {
   const deletedTodo = await TodoModel.findByIdAndDelete(id);
-  if (!deletedTodo) throw new Error("todo not found!");
+  if (!deletedTodo) throw new TodoError("todo not found!", 404);
 
   return deletedTodo;
 };
