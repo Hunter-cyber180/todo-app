@@ -2,6 +2,8 @@ import { Router, Request, Response } from "express";
 import GetAllTodosDto from "./dto/getAllTodos";
 import Todo from "./dto/todoDto";
 import { create, getAll, getOne, remove, update } from "./todoServices";
+import validateMiddleware from "../middlewares/validate.middleware";
+import CreateTodoDto from "./dto/todoCreateDto";
 const router = Router();
 
 router.get("/", async (req: Request, res: Response): Promise<void> => {
@@ -32,28 +34,36 @@ router.get("/:id", async (req: Request, res: Response): Promise<void> => {
   });
 });
 
-router.post("/", async (req: Request, res: Response): Promise<void> => {
-  const body: Todo = req.body;
-  const newTodo = await create(body);
+router.post(
+  "/",
+  validateMiddleware(CreateTodoDto),
+  async (req: Request, res: Response): Promise<void> => {
+    const body: Todo = req.body;
+    const newTodo = await create(body);
 
-  res.status(201).json({
-    message: "Create todo was successfully!",
-    data: newTodo,
-    success: true,
-  });
-});
+    res.status(201).json({
+      message: "Create todo was successfully!",
+      data: newTodo,
+      success: true,
+    });
+  }
+);
 
-router.put("/:id", async (req: Request, res: Response): Promise<void> => {
-  const { id } = req.params;
-  const body: Todo = req.body;
+router.put(
+  "/:id",
+  validateMiddleware(CreateTodoDto),
+  async (req: Request, res: Response): Promise<void> => {
+    const { id } = req.params;
+    const body: Todo = req.body;
 
-  const updatedTodo = await update(id, body);
-  res.status(200).json({
-    message: "Update todo was successfully!",
-    data: updatedTodo,
-    success: true,
-  });
-});
+    const updatedTodo = await update(id, body);
+    res.status(200).json({
+      message: "Update todo was successfully!",
+      data: updatedTodo,
+      success: true,
+    });
+  }
+);
 
 router.delete("/:id", async (req: Request, res: Response): Promise<void> => {
   const { id } = req.params;
