@@ -24,6 +24,10 @@ app.get("/", (req: Request, res: Response) => {
 
 app.use("/todos", todoController);
 
+app.use((req: Request, res: Response, next: NextFunction) => {
+  res.status(404).json({ success: false, message: "page not found!" });
+});
+
 const port: number = parseInt(process.env.PORT!) || 3000;
 
 app.listen(port, "127.0.0.1", () =>
