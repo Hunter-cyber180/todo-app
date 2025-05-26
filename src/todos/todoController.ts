@@ -1,12 +1,21 @@
 import { Router, Request, Response } from "express";
-import GetAllTodosDto from "./dto/getAllTodos";
+
+// * --- DTO ---
 import Todo from "./dto/todoDto";
-import { create, getAll, getOne, remove, update } from "./todoServices";
-import validateMiddleware from "../middlewares/validate.middleware";
+import GetAllTodosDto from "./dto/getAllTodos";
 import CreateTodoDto from "./dto/todoCreateDto";
+
+// * --- services ---
+import { create, getAll, getOne, remove, update } from "./todoServices";
+
+// * --- middlewares ---
+import validateMiddleware from "../middlewares/validate.middleware";
+
 const router = Router();
 
+// get all todos route
 router.get("/", async (req: Request, res: Response): Promise<void> => {
+  // To get todos that have these filters
   const filters: GetAllTodosDto = {
     title: req.query.title as string,
     status: req.query.status as string,
@@ -14,6 +23,7 @@ router.get("/", async (req: Request, res: Response): Promise<void> => {
     limit: req.query.limit ? Number(req.query.limit) : 10,
   };
 
+  // get todos from todoServices
   const todos = await getAll(filters);
 
   res.status(200).json({
@@ -23,8 +33,11 @@ router.get("/", async (req: Request, res: Response): Promise<void> => {
   });
 });
 
+// get one todo route
 router.get("/:id", async (req: Request, res: Response): Promise<void> => {
   const { id } = req.params;
+
+  // get todo from todoServices
   const todo = await getOne(id);
 
   res.status(200).json({
@@ -34,11 +47,13 @@ router.get("/:id", async (req: Request, res: Response): Promise<void> => {
   });
 });
 
+// create todo route
 router.post(
   "/",
-  validateMiddleware(CreateTodoDto),
+  validateMiddleware(CreateTodoDto), // validation body
   async (req: Request, res: Response): Promise<void> => {
     const body: Todo = req.body;
+    // create todo from todoServices
     const newTodo = await create(body);
 
     res.status(201).json({
@@ -49,14 +64,17 @@ router.post(
   }
 );
 
+// update todo route
 router.put(
   "/:id",
-  validateMiddleware(CreateTodoDto),
+  validateMiddleware(CreateTodoDto), // validation body
   async (req: Request, res: Response): Promise<void> => {
     const { id } = req.params;
     const body: Todo = req.body;
 
+    // update todo from todoServices
     const updatedTodo = await update(id, body);
+
     res.status(200).json({
       message: "Update todo was successfully!",
       data: updatedTodo,
@@ -65,8 +83,11 @@ router.put(
   }
 );
 
+// delete todo route
 router.delete("/:id", async (req: Request, res: Response): Promise<void> => {
   const { id } = req.params;
+
+  // delete todo from todoServices
   const deletedTodo = await remove(id);
 
   res.status(200).json({

@@ -1,5 +1,6 @@
 import { IsOptional } from "class-validator";
 
+// create GetAllTodosDto to validate parameters in getAll todos route
 class GetAllTodosDto {
   @IsOptional()
   title: string;

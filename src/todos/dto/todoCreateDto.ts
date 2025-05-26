@@ -6,8 +6,11 @@ import {
   MaxLength,
   MinLength,
 } from "class-validator";
+
+// * --- enums ---
 import { TodoStatus } from "../enums/todo-status.enum";
 
+// create CreateTodoDto to validate new todo fileds
 class CreateTodoDto {
   @IsNotEmpty({ message: "Title cannot be empty" })
   @IsString({ message: "Title type must be a string." })
