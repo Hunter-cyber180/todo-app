@@ -59,3 +59,10 @@ export const remove = async (id: string) => {
 
   return deletedTodo;
 };
+
+// delete all todos
+export const removeAll = async () => {
+  const deletedTodos = await TodoModel.deleteMany({});
+
+  return deletedTodos;
+}
