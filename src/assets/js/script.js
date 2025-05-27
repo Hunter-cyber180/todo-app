@@ -1,8 +1,8 @@
 const inputBox = document.getElementById("input-box");
 const listContainer = document.getElementById("list-container");
+const url = "http://localhost:4000/todos";
 
 async function fetchTasks() {
-    const url = "http://localhost:4000/todos";
     try {
         const response = await fetch(url);
         if (!response.ok)
@@ -34,20 +34,29 @@ async function loadAndDisplayTasks() {
 }
 
 // this function checks if there's some content in the inputBox and adds a new task in the LI element
-function addTask() {
+async function addTask() {
     if (inputBox.value === "") {
         alert("You must write something!");
     } else {
-        let newTask = document.createElement("li");
-        newTask.innerHTML = inputBox.value;
-        listContainer.appendChild(newTask);
-        let span = document.createElement("span");
-        span.innerHTML = "\u00d7";
-        newTask.appendChild(span);
+        try {
+            const response = await fetch(url,
+                {
+                    headers: { "Content-Type": "application/json" },
+                    method: "POST",
+                    body: JSON.stringify({ title: inputBox.value })
+                });
+
+            if (response.status == 201)
+                alert("task added!");
+
+        } catch (error) {
+            console.log("Error post todo");
+        }
     }
     //clean inputBox after adding a new task
     inputBox.value = "";
-    saveData();
+    listContainer.innerHTML = "";
+    loadAndDisplayTasks();
 }
 
 // shows the checked icon when the user clicks on the circle icon of the task and when the user clicks on "x" remove the item from the to-do list
