@@ -26,6 +26,13 @@ function showTask(title) {
     );
 }
 
+async function loadAndDisplayTasks() {
+  const tasks = await fetchTasks();
+  tasks.forEach(task => {
+    showTask(task.title);
+  });
+}
+
 // this function checks if there's some content in the inputBox and adds a new task in the LI element
 function addTask() {
     if (inputBox.value === "") {
