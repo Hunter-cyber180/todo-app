@@ -16,11 +16,11 @@ async function fetchTasks() {
     }
 }
 
-function showTask(title) {
+function showTask(title, id) {
     listContainer.insertAdjacentHTML(
         "beforeend",
         `<li>
-            ${title}<span class="icon">×</span>
+            ${title}<span class="icon" onclick=removeTask('${id}')">×</span>
         </li>
         `
     );
@@ -29,7 +29,7 @@ function showTask(title) {
 async function loadAndDisplayTasks() {
   const tasks = await fetchTasks();
   tasks.forEach(task => {
-    showTask(task.title);
+    showTask(task.title, task._id);
   });
 }
 
