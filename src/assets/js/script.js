@@ -16,6 +16,16 @@ async function fetchTasks() {
     }
 }
 
+function showTask(title) {
+    listContainer.insertAdjacentHTML(
+        "beforeend",
+        `<li>
+            ${title}<span class="icon">×</span>
+        </li>
+        `
+    );
+}
+
 // this function checks if there's some content in the inputBox and adds a new task in the LI element
 function addTask() {
     if (inputBox.value === "") {
