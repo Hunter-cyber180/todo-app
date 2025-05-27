@@ -6,7 +6,14 @@ import GetAllTodosDto from "./dto/getAllTodos";
 import CreateTodoDto from "./dto/todoCreateDto";
 
 // * --- services ---
-import { create, getAll, getOne, remove, update } from "./todoServices";
+import {
+  create,
+  getAll,
+  getOne,
+  remove,
+  removeAll,
+  update,
+} from "./todoServices";
 
 // * --- middlewares ---
 import validateMiddleware from "../middlewares/validate.middleware";
@@ -82,6 +89,18 @@ router.put(
     });
   }
 );
+
+// delete all todos route
+router.delete("/all", async (req: Request, res: Response): Promise<void> => {
+  // delete all todos from todoServices
+  const deletedTodos = await removeAll();
+
+  res.status(200).json({
+    message: "Delete all todos was successfully!",
+    data: deletedTodos,
+    success: true,
+  });
+});
 
 // delete todo route
 router.delete("/:id", async (req: Request, res: Response): Promise<void> => {
