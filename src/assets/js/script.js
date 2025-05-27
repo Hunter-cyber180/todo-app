@@ -71,7 +71,4 @@ function saveData() {
 }
 
 //shows data whenever we open the website again
-function showTask() {
-    listContainer.innerHTML = localStorage.getItem("data");
-}
-showTask();
+document.addEventListener("DOMContentLoaded", loadAndDisplayTasks);
