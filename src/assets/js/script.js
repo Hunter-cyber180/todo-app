@@ -79,5 +79,22 @@ function saveData() {
     localStorage.setItem("data", listContainer.innerHTML);
 }
 
+async function removeTask(id) {
+    try {
+        const response = await fetch(`${url}/${id}`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json"
+            },
+        });
+
+        if(response.status == 200)
+            alert("task deleted!");
+
+    } catch (error) {
+        console.log("Error delete todo!");
+    }
+}
+
 //shows data whenever we open the website again
 document.addEventListener("DOMContentLoaded", loadAndDisplayTasks);
