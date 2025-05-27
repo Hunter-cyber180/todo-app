@@ -1,6 +1,21 @@
 const inputBox = document.getElementById("input-box");
 const listContainer = document.getElementById("list-container");
 
+async function fetchTasks() {
+    const url = "http://localhost:4000/todos";
+    try {
+        const response = await fetch(url);
+        if (!response.ok)
+            throw new Error(`Response status: ${response.status}`);
+
+        const { data } = await response.json();
+        return data;
+    } catch (error) {
+        console.log("Error getting todos");
+        return [];
+    }
+}
+
 // this function checks if there's some content in the inputBox and adds a new task in the LI element
 function addTask() {
     if (inputBox.value === "") {
