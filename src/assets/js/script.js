@@ -27,10 +27,10 @@ function showTask(title, id) {
 }
 
 async function loadAndDisplayTasks() {
-  const tasks = await fetchTasks();
-  tasks.forEach(task => {
-    showTask(task.title, task._id);
-  });
+    const tasks = await fetchTasks();
+    tasks.forEach(task => {
+        showTask(task.title, task._id);
+    });
 }
 
 // this function checks if there's some content in the inputBox and adds a new task in the LI element
@@ -88,11 +88,31 @@ async function removeTask(id) {
             },
         });
 
-        if(response.status == 200)
+        if (response.status == 200)
             alert("task deleted!");
 
     } catch (error) {
         console.log("Error delete todo!");
+    }
+}
+
+async function deleteAll() {
+    try {
+        const response = await fetch(`${url}/all`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json"
+            },
+        });
+
+        if (response.status == 200) {
+            alert("All tasks were deleted.");
+            listContainer.innerHTML = "";
+            loadAndDisplayTasks();
+        }
+
+    } catch (error) {
+        console.log("Error delete all todos!");
     }
 }
 
