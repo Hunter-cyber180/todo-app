@@ -20,7 +20,7 @@ function showTask(title, id) {
     listContainer.insertAdjacentHTML(
         "beforeend",
         `<li>
-            ${title}<span class="icon" onclick=removeTask('${id}')">×</span>
+            ${title}<span class="icon" onclick="removeTask('${id}')">×</span>
         </li>
         `
     );
