@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <!-- Basic meta tags and page title -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- CSS stylesheet and Google Fonts (Poppins) -->
     <link rel="stylesheet" href="./css/style.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -13,25 +15,32 @@
     <title>Todo App</title>
   </head>
   <body>
+    <!-- Main app container -->
     <div class="container">
       <div class="todo-app">
+
         <h1><i class="fa-regular fa-pen-to-square"></i>To-do List:</h1>
+        
+        <!-- Task input area -->
         <div class="row">
           <input type="text" id="input-box" placeholder="Add a new task" />
           <button onclick="addTask()">Add</button>
         </div>
+        
+        <!-- Task list container (populated by JavaScript) -->
         <ul id="list-container">
-          <!-- 			<li class="checked">Task 1</li>
-			<li>Task 2</li> -->
+          <!-- Sample tasks (commented out) -->
+          <!-- <li class="checked">Task 1</li>
+          <li>Task 2</li> -->
         </ul>
+        
+        <!-- Reset button to clear all tasks -->
         <button onclick="deleteAll()">Reset</button>
       </div>
     </div>
 
-    <script
-      src="https://kit.fontawesome.com/b4db02e187.js"
-      crossorigin="anonymous"
-    ></script>
+    <!-- Font Awesome for icons and main JavaScript file -->
+    <script src="https://kit.fontawesome.com/b4db02e187.js" crossorigin="anonymous"></script>
     <script src="./js/script.js"></script>
   </body>
 </html>
