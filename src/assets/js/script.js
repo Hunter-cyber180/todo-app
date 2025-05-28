@@ -2,8 +2,10 @@ const inputBox = document.getElementById("input-box");
 const listContainer = document.getElementById("list-container");
 const url = "http://localhost:4000/todos";
 
+// get all todos
 async function fetchTasks() {
     try {
+        // get all todos from sevrer
         const response = await fetch(url);
         if (!response.ok)
             throw new Error(`Response status: ${response.status}`);
@@ -11,13 +13,17 @@ async function fetchTasks() {
         const { data } = await response.json();
         return data;
     } catch (error) {
+        // log error if there was a problem getting todos
         console.log("Error getting todos");
         return [];
     }
 }
 
 function showTask(title, id, status) {
+    // Checking todo status and setting classname for todo
     const checkedClass = status === "completed" ? "checked" : "";
+
+    // Add todo to listConatiner to display it
     listContainer.insertAdjacentHTML(
         "beforeend",
         `<div>
@@ -30,8 +36,11 @@ function showTask(title, id, status) {
     );
 }
 
+// display todos
 async function loadAndDisplayTasks() {
-    const tasks = await fetchTasks();
+    const tasks = await fetchTasks(); // get all todos
+
+    // display all todos
     tasks.forEach(task => {
         showTask(task.title, task._id, task.status);
     });
