@@ -100,8 +100,10 @@ function saveData() {
     localStorage.setItem("data", listContainer.innerHTML);
 }
 
+// delete a todo
 async function removeTask(id) {
     try {
+        // send delete request to server
         const response = await fetch(`${url}/${id}`, {
             method: "DELETE",
             headers: {
@@ -113,6 +115,7 @@ async function removeTask(id) {
             alert("task deleted!");
 
     } catch (error) {
+        // log error if there was a problem deleting todo
         console.log("Error delete todo!");
     }
 }
