@@ -75,6 +75,7 @@ async function addTask() {
         alert("You must write something!");
     } else {
         try {
+            // send post request to server to add a new todo
             const response = await fetch(url,
                 {
                     headers: { "Content-Type": "application/json" },
@@ -86,6 +87,7 @@ async function addTask() {
                 alert("task added!");
 
         } catch (error) {
+            // log error if there was a problem adding todo
             console.log("Error post todo");
         }
     }
