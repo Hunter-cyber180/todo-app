@@ -37,8 +37,10 @@ async function loadAndDisplayTasks() {
     });
 }
 
+// toggleStatus function to change todo status
 async function toggleStatus(id) {
     try {
+        // get todo from server
         const response = await fetch(`${url}/${id}`);
         if (!response.ok)
             throw new Error(`Response status: ${response.status}`);
@@ -46,8 +48,10 @@ async function toggleStatus(id) {
         const { data } = await response.json();
 
         try {
+            // Reverse todo status
             const taskStatus = data.status === "completed" ? "pending" : "completed";
 
+            // send update request to server
             const res = await fetch(`${url}/${id}`,
                 {
                     headers: { "Content-Type": "application/json" },
@@ -58,13 +62,16 @@ async function toggleStatus(id) {
             if (res.status == 200)
                 alert("task updated!");
 
+            // clean listContainer after updating a task and display updated tasks
             listContainer.innerHTML = "";
             loadAndDisplayTasks();
 
         } catch (error) {
+            // log error if there was a problem updating todo
             console.log("Error update todo");
         }
     } catch (error) {
+        // log error if there was a problem getting todo
         console.log("Error getting todo");
     }
 }
