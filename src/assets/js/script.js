@@ -16,11 +16,15 @@ async function fetchTasks() {
     }
 }
 
-function showTask(title, id) {
+function showTask(title, id, status) {
+    const checkedClass = status === "completed" ? "checked" : "";
     listContainer.insertAdjacentHTML(
         "beforeend",
-        `<li>
-            ${title}<span class="icon" onclick="removeTask('${id}')">×</span>
+        `<li class=${checkedClass}>
+            ${title}
+            <span
+                onclick="removeTask('${id}')">
+            ×</span>
         </li>
         `
     );
@@ -29,7 +33,7 @@ function showTask(title, id) {
 async function loadAndDisplayTasks() {
     const tasks = await fetchTasks();
     tasks.forEach(task => {
-        showTask(task.title, task._id);
+        showTask(task.title, task._id, task.status);
     });
 }
 
