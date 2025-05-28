@@ -117,8 +117,10 @@ async function removeTask(id) {
     }
 }
 
+// delete all todos
 async function deleteAll() {
     try {
+        // send delete request to server
         const response = await fetch(`${url}/all`, {
             method: "DELETE",
             headers: {
@@ -133,6 +135,7 @@ async function deleteAll() {
         }
 
     } catch (error) {
+        // log error if there was a problem deleting todos
         console.log("Error delete all todos!");
     }
 }
