@@ -127,6 +127,8 @@ async function removeTask(id) {
         if (response.status == 200)
             alert("task deleted!");
 
+        listContainer.innerHTML = "";
+        loadAndDisplayTasks();
     } catch (error) {
         // log error if there was a problem deleting todo
         console.log("Error delete todo!");
