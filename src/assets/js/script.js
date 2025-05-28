@@ -95,11 +95,6 @@ async function addTask() {
     loadAndDisplayTasks();
 }
 
-//when page is refreshed any task is lost
-function saveData() {
-    localStorage.setItem("data", listContainer.innerHTML);
-}
-
 // delete a todo
 async function removeTask(id) {
     try {
