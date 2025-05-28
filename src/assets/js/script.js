@@ -20,12 +20,12 @@ function showTask(title, id, status) {
     const checkedClass = status === "completed" ? "checked" : "";
     listContainer.insertAdjacentHTML(
         "beforeend",
-        `<li class=${checkedClass}>
-            ${title}
-            <span
-                onclick="removeTask('${id}')">
-            ×</span>
-        </li>
+        `<div>
+            <li class="${checkedClass}">
+                <p onclick="toggleStatus('${id}')">${title}</p>
+                <span onclick="removeTask('${id}')"> ×</span>
+            </li>
+        </div>
         `
     );
 }
@@ -35,6 +35,38 @@ async function loadAndDisplayTasks() {
     tasks.forEach(task => {
         showTask(task.title, task._id, task.status);
     });
+}
+
+async function toggleStatus(id) {
+    try {
+        const response = await fetch(`${url}/${id}`);
+        if (!response.ok)
+            throw new Error(`Response status: ${response.status}`);
+
+        const { data } = await response.json();
+
+        try {
+            const taskStatus = data.status === "completed" ? "pending" : "completed";
+
+            const res = await fetch(`${url}/${id}`,
+                {
+                    headers: { "Content-Type": "application/json" },
+                    method: "PUT",
+                    body: JSON.stringify({ title: data.title, status: taskStatus })
+                });
+
+            if (res.status == 200)
+                alert("task updated!");
+
+            listContainer.innerHTML = "";
+            loadAndDisplayTasks();
+
+        } catch (error) {
+            console.log("Error update todo");
+        }
+    } catch (error) {
+        console.log("Error getting todo");
+    }
 }
 
 // this function checks if there's some content in the inputBox and adds a new task in the LI element
@@ -62,21 +94,6 @@ async function addTask() {
     listContainer.innerHTML = "";
     loadAndDisplayTasks();
 }
-
-// shows the checked icon when the user clicks on the circle icon of the task and when the user clicks on "x" remove the item from the to-do list
-listContainer.addEventListener(
-    "click",
-    function (e) {
-        if (e.target.tagName === "LI") {
-            e.target.classList.toggle("checked");
-            saveData();
-        } else if (e.target.tagName === "SPAN") {
-            e.target.parentElement.remove();
-            saveData();
-        }
-    },
-    false
-);
 
 //when page is refreshed any task is lost
 function saveData() {
